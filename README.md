@@ -37,13 +37,15 @@ Mobile-Dev is a Kotlin-based movie and TV show recommendation app that helps use
 
     ```gradle
     dependencies {
-        implementation "com.squareup.retrofit2:retrofit:2.9.0"
-        implementation "com.squareup.retrofit2:converter-gson:2.9.0"
-        implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
-        implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
-        implementation "com.github.bumptech.glide:glide:4.11.0"
-        implementation "androidx.room:room-runtime:2.3.0"
-        annotationProcessor "androidx.room:room-compiler:2.3.0"
+       implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.navigation.fragment.ktx)
+    implementation (libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.appcompat)
     }
     ```
 
