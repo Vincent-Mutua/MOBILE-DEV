@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.example.movieapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.movieapp"
-        minSdk = 31
-        targetSdk = 33
+        minSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -43,9 +43,12 @@ android {
         compose = true
         viewBinding=true
     }
+
 }
 
 dependencies {
+    implementation(libs.okhttp)
+    implementation(libs.tmdb.api)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -59,6 +62,7 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.testing)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -80,5 +84,6 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.auth)
     implementation(libs.google.firebase.firestore)
+    implementation (libs.coil.compose)
 
 }

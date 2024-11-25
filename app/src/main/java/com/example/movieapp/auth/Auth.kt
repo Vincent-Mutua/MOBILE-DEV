@@ -29,8 +29,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-
-
+import com.example.movieapp.model.MockDataProvider
+import com.example.movieapp.model.MockUser
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,8 +46,9 @@ class Auth: ComponentActivity(){
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(navController: NavHostController){
+fun RegisterScreen(navController: NavHostController, mockUser: MockUser? = null){
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var firstName by remember { mutableStateOf("") }
@@ -130,13 +131,16 @@ fun RegisterScreen(navController: NavHostController){
                                 .addOnSuccessListener {
                                     Toast.makeText(context,"Registration successful",Toast.LENGTH_SHORT).show()
                                     // Navigation code to login page
-                                    navController.navigate("login_screen")
+                                    navController.navigate("login_screen"){
+                                        popUpTo("register_screen") { inclusive = true }
+                                    }
                                 }
                                 .addOnFailureListener{e->
                                     Toast.makeText(context, "Firestore Error: $e", Toast.LENGTH_SHORT).show()
                                 }
                         }else{
-                            Toast.makeText(context,"Authentication failed.",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context,"Authentication failed: ${task.exception?.message}",Toast.LENGTH_SHORT).show()
+
 
                         }
 
@@ -161,9 +165,9 @@ fun RegisterScreen(navController: NavHostController){
     }
 }
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController, mockUser: MockUser? = null) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -181,7 +185,7 @@ fun LoginScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Login",
+            text = "Welcome Back! Login",
             fontSize = 24.sp,
             color = MaterialTheme.colorScheme.primary
         )
@@ -214,13 +218,24 @@ fun LoginScreen(navController: NavHostController) {
                    .addOnCompleteListener{ task ->
                       if(task.isSuccessful) {
                           Toast.makeText(context, "Login successful",Toast.LENGTH_SHORT).show()
+                          // Navigation code to home screen
+                          navController.navigate("main_screen"){
+                              popUpTo("login_screen") { inclusive = true }
+                          }
 
                       }else{
                           Toast.makeText(context, "Login failed:${task.exception?.message}" ,Toast.LENGTH_SHORT).show()
                       }
 
                        }
-
+               if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                   Toast.makeText(context, "Please enter a valid email address.", Toast.LENGTH_SHORT).show()
+                   return@Button
+               }
+               if (password.length < 6) {
+                   Toast.makeText(context, "Password must be at least 6 characters.", Toast.LENGTH_SHORT).show()
+                   return@Button
+               }
 
 
            },
@@ -239,12 +254,20 @@ fun LoginScreen(navController: NavHostController) {
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
-fun PreviewRegisterScreen() {
-
-    RegisterScreen(navController = rememberNavController())
+fun RegisterScreenPreview() {
+    RegisterScreen(navController = rememberNavController(), mockUser = MockDataProvider.sampleUser)
 }
+
+
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+    LoginScreen(navController = rememberNavController(), mockUser = MockDataProvider.sampleUser)
+}
+
 
 
 
