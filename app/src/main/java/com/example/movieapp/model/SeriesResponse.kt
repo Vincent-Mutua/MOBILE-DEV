@@ -7,16 +7,16 @@ data class SeriesResponse(
 
 data class Series(
     val id: Int,
-    val originalLanguage: String,
-    val originalTitle: String,
+    val original_language: String,
+    val original_name: String,
     val overview: String,
-    val posterPath: String?,
-    val releaseDate: String,
-    val title: String,
-    val voteAverage: Double,
-    val voteCount: Int
+    val poster_path: String?,
+    val first_air_date: String,
+    val name: String,
+    val vote_average: Double,
+    val vote_count: Int
 )
 
 
-fun Series.getPosterUrl():
-        String = "https://image.tmdb.org/t/p/w500$posterPath"
+fun Series.getPosterUrl(): String = "https://image.tmdb.org/t/p/w500${poster_path ?: ""}"
+

@@ -1,25 +1,31 @@
 package com.example.movieapp.repository
 
 
-import com.example.movieapp.model.Movie
+import android.util.Log
 import com.example.movieapp.tmdb.NetworkClient
 
-// MovieRepository.kt
+
 class MovieRepository {
     private val service = NetworkClient.tmdbService
-    suspend fun getNowPlayingMovies() = service.getNowPlayingMovies()
-    suspend fun getUpcomingMovies() = service.getUpcomingMovies()
-    suspend fun getTopRatedMovies() = service.getTopRatedMovies()
-    suspend fun getPopularMovies() = service.getPopularMovies()
-    suspend fun searchMovies(query: String) = service.searchMovies(query)
-    suspend fun getMovieById(movieId: String?): Movie? {
-        return if (movieId != null) {
-            service.getMovieDetails(movieId.toInt())
-        } else {
-            null
+
+    suspend fun getNowPlayingMovies() = logAndFetch { service.getNowPlayingMovies() }
+    suspend fun getUpcomingMovies() = logAndFetch { service.getUpcomingMovies() }
+    suspend fun getTopRatedMovies() = logAndFetch { service.getTopRatedMovies() }
+    suspend fun getPopularMovies() = logAndFetch { service.getPopularMovies() }
+    suspend fun searchMovies(query: String) = logAndFetch { service.searchMovies(query) }
+    suspend fun getTrendingMovies() = logAndFetch { service.getTrendingMovies() }
+    suspend fun getMovieDetails(movieId: Int) = logAndFetch { service.getMovieDetails(movieId) }
+
+
+    private suspend fun <T> logAndFetch(apiCall: suspend () -> T): T {
+        try {
+            val response = apiCall()
+            Log.d("MovieRepository", "API call is successful: $response")
+            return response
+        } catch (e: Exception) {
+            Log.e("MovieRepository", "API call has failed: ${e.message}")
+            throw e
         }
     }
-
-
-
 }
+

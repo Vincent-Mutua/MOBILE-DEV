@@ -2,7 +2,7 @@ package com.example.movieapp.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movieapp.items.HistoryItem
+import com.example.movieapp.model.Movie
 import com.example.movieapp.model.Series
 import com.example.movieapp.repository.MovieRepository
 import com.example.movieapp.repository.SeriesRepository
@@ -15,28 +15,22 @@ class MainViewModel(
     private val seriesRepository: SeriesRepository
 ) : ViewModel() {
 
-    private val _upcomingSchedule = MutableStateFlow<List<Series>>(emptyList())
-    val upcomingSchedule: StateFlow<List<Series>> = _upcomingSchedule
+    private val _trendingMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val trendingMovies: StateFlow<List<Movie>> = _trendingMovies
 
-    private val _history = MutableStateFlow<List<HistoryItem>>(emptyList())
-    val history: StateFlow<List<HistoryItem>> = _history
+    private val _trendingSeries = MutableStateFlow<List<Series>>(emptyList())
+    val trendingSeries: StateFlow<List<Series>> = _trendingSeries
+
 
     init {
-        fetchSchedule()
+        fetchTrending()
     }
 
-    private fun fetchSchedule() {
+    private fun fetchTrending() {
         viewModelScope.launch {
-            _upcomingSchedule.value = seriesRepository.getPopularSeries().results
-
+            _trendingMovies.value = movieRepository.getTrendingMovies().results
+            _trendingSeries.value = seriesRepository.getTrendingSeries().results
         }
     }
 
-    fun addToHistory(item: HistoryItem) {
-        val updatedHistory = _history.value.toMutableList()
-        updatedHistory.add(item)
-        _history.value = updatedHistory
-    }
 }
-
-

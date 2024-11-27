@@ -19,32 +19,25 @@ import com.example.movieapp.model.Series
 import com.example.movieapp.model.getPosterUrl
 import com.example.movieapp.view_model.SeriesViewModel
 
+
 @Composable
 fun SeriesItem(navController: NavController, series: Series, viewModel: SeriesViewModel) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.clickable {
             navController.navigate("series_detail/${series.id}")
-            viewModel.addToHistory(
-                HistoryItem(
-                    id = series.id.toString(),
-                    title = series.title,
-                    posterUrl = series.posterPath ?: "",
-                    rating = series.voteAverage
-                )
-            )
         }
     ) {
         Image(
             painter = rememberAsyncImagePainter(series.getPosterUrl()),
-            contentDescription = series.title,
+            contentDescription = series.name,
             modifier = Modifier
                 .size(120.dp, 180.dp)
                 .padding(bottom = 8.dp),
             contentScale = ContentScale.Crop
         )
         Text(
-            text = series.title,
+            text = series.name,
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             maxLines = 2,

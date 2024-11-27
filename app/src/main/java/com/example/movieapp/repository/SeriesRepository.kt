@@ -2,21 +2,27 @@ package com.example.movieapp.repository
 
 
 
-import com.example.movieapp.model.Series
+import android.util.Log
 import com.example.movieapp.tmdb.NetworkClient
+import com.example.movieapp.model.SeriesResponse
 
-// SeriesRepository.kt
-class SeriesRepository{
+class SeriesRepository {
     private val service = NetworkClient.tmdbService
-    suspend fun getTopRatedSeries() = service.getTopRatedSeries()
-    suspend fun getPopularSeries() = service.getPopularSeries()
-    suspend fun getSeriesById(seriesId: String?): Series? {
-        return if (seriesId != null) {
-            service.getSeriesDetails(seriesId.toInt())
-        } else {
-            null
+
+    suspend fun getPopularSeries(): SeriesResponse = logAndFetch { service.getPopularSeries() }
+    suspend fun getTopRatedSeries(): SeriesResponse = logAndFetch { service.getTopRatedSeries() }
+    suspend fun searchSeries(query: String): SeriesResponse = logAndFetch { service.searchSeries(query) }
+    suspend fun getTrendingSeries(): SeriesResponse = logAndFetch { service.getTrendingSeries() }
+    suspend fun getSeriesDetails(seriesId: Int) = logAndFetch { service.getSeriesDetails(seriesId) }
+
+    private suspend fun <T> logAndFetch(apiCall: suspend () -> T): T {
+        try {
+            val response = apiCall()
+            Log.d("SeriesRepository", "API call successful: $response")
+            return response
+        } catch (e: Exception) {
+            Log.e("SeriesRepository", "API call failed: ${e.message}")
+            throw e
         }
     }
-
-    suspend fun searchSeries(query: String) = service.searchSeries(query)
 }

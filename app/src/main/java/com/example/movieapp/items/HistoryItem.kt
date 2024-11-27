@@ -4,6 +4,6 @@ data class HistoryItem(
     val id: String,
     val title: String,
     val rating: Double?,
-    val posterUrl: String
-
+    val posterUrl: String,
+    val isMovie: Boolean,
 )

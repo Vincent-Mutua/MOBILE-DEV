@@ -85,5 +85,7 @@ dependencies {
     implementation(libs.google.firebase.auth)
     implementation(libs.google.firebase.firestore)
     implementation (libs.coil.compose)
+    implementation (libs.androidx.material.icons.extended)
+
 
 }

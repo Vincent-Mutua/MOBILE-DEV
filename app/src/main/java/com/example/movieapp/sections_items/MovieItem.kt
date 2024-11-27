@@ -25,14 +25,6 @@ fun MovieItem(navController: NavController, movie: Movie, viewModel: MovieViewMo
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.clickable {
             navController.navigate("movie_detail/${movie.id}")
-            viewModel.addToHistory(
-                HistoryItem(
-                    id = movie.id.toString(),
-                    title = movie.title,
-                    posterUrl = movie.posterPath ?: "",
-                    rating = movie.voteAverage
-                )
-            )
         }
     ) {
         Image(
