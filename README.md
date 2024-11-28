@@ -1,26 +1,27 @@
 # MOBILE-DEV
 
-# Mobile-Dev - Movie Recommendation App
+# MovieApp - Movie Recommendation App
 
-Mobile-Dev is a Kotlin-based movie and TV show recommendation app that helps users find movies and TV shows to watch based on their preferences. It integrates with the TMDb API to provide up-to-date content on movies, TV shows, and more.
+MovieApp is a Kotlin-based movie and TV show recommendation app that helps users find movies and TV shows to watch based on their preferences. It integrates with the TMDb API to provide up-to-date content on movies and TV shows.
 
 ## Features
 
-- **Home Screen**: Displays previews of other pages like 'My List,' 'Recommendations,' 'Settings,' and 'Search' through fragments and activities.
+- **Home Screen**: Displays previews of other pages like 'Trending Movies,' 'Trending Series,' 'Popular Movies' through composable functions. 
 - **Movie Recommendations**: Get personalized recommendations based on the user's watch history or preferences.
 - **Search Functionality**: Search for movies and TV shows using keywords.
-- **My List**: Users can create a personalized list of favorite movies and TV shows.
-- **Settings**: Customize the app's functionality, such as theme settings or notification preferences.
+- **Bottom Navigation bar**: Integrated with navigation functionality to other screens like "Movies", "Series" and "Profile".
+- **Settings**: View and edit user profile information.
 
 ## Technologies Used
 
 - **Kotlin**: The primary programming language for the app.
 - **TMDb API**: Provides movie and TV show data.
-- **Fragments and Activities**: Used to manage the app's user interface.
+- **Composable functions**: Used to manage the app's user interface.
 - **ViewModel & LiveData**: For managing UI-related data in a lifecycle-conscious way.
 - **Retrofit**: For API calls to fetch movie and TV show data.
 - **Glide/Picasso**: For image loading and caching.
-- **Room Database**: For saving user data like My List and preferences locally.
+- **Firebase**: For setting up user authentication
+- **Firestore**: For storing user data. 
 
 ## Setup Instructions
 
@@ -37,15 +38,34 @@ Mobile-Dev is a Kotlin-based movie and TV show recommendation app that helps use
 
     ```gradle
     dependencies {
-       implementation (libs.retrofit)
-    implementation (libs.converter.gson)
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler)
-    implementation (libs.androidx.lifecycle.viewmodel.ktx)
-    implementation (libs.androidx.lifecycle.livedata.ktx)
-    implementation (libs.androidx.navigation.fragment.ktx)
-    implementation (libs.androidx.navigation.ui.ktx)
+   implementation(libs.androidx.navigation.testing)
+    implementation(libs.androidx.room.ktx)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.logging.interceptor)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.google.firebase.auth)
+    implementation(libs.google.firebase.firestore)
+    implementation (libs.firebase.storage.ktx)
+    implementation (libs.coil.compose)
+    implementation (libs.androidx.material.icons.extended)
+    implementation (libs.androidx.activity.compose.v170)
+    
     }
     ```
 
@@ -61,9 +81,6 @@ Mobile-Dev is a Kotlin-based movie and TV show recommendation app that helps use
 
    Open the project in Android Studio, build, and run the app on an emulator or real device.
 
-## Contributing
-
-If you want to contribute to the project, feel free to fork the repository, make changes, and create a pull request. We welcome any contributions to improve the app!
 
 ## License
 
