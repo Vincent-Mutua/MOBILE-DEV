@@ -1,23 +1,33 @@
 package com.example.movieapp
 
-import MainViewModelFactory
+import ProfileScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Tv
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -32,15 +42,12 @@ import com.example.movieapp.auth.LoginScreen
 import com.example.movieapp.auth.RegisterScreen
 import com.example.movieapp.details.MovieDetailsScreen
 import com.example.movieapp.details.SeriesDetailsScreen
-import com.example.movieapp.model.Movie
-import com.example.movieapp.model.Series
 import com.example.movieapp.repository.MovieRepository
 import com.example.movieapp.repository.SeriesRepository
 import com.example.movieapp.screens.MainScreen
 import com.example.movieapp.screens.MoviesScreen
 import com.example.movieapp.screens.SeriesScreen
 import com.example.movieapp.ui.theme.MovieAppTheme
-import com.example.movieapp.view_model.MainViewModel
 import com.example.movieapp.view_model.MovieViewModel
 import com.example.movieapp.view_model.SeriesViewModel
 import kotlinx.coroutines.delay
@@ -62,7 +69,7 @@ class MainActivity : ComponentActivity() {
                     bottomBar = {
                         val currentBackStackEntry = navController.currentBackStackEntryAsState().value
                         val currentDestination = currentBackStackEntry?.destination?.route
-                        if (currentDestination in listOf("main_screen", "movies", "series")) {
+                        if (currentDestination in listOf("main_screen", "movies", "series", "profile_screen")) {
                             BottomNavBar(navController)
                         }
                     }
@@ -90,6 +97,7 @@ class MainActivity : ComponentActivity() {
                                 SeriesDetailsScreen(seriesId = it, seriesViewModel = seriesViewModel)
                             }
                         }
+                        composable("profile_screen") { ProfileScreen(navController) }
 
 
 
@@ -102,11 +110,11 @@ class MainActivity : ComponentActivity() {
 
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun SplashScreen(navController: NavHostController) {
     LaunchedEffect(Unit) {
-        delay(3000) // 2 seconds
+        delay(5000) // 5 seconds
         navController.navigate("main_screen"){
             popUpTo("splash_screen") { inclusive = true }
         }
@@ -132,8 +140,8 @@ fun SplashScreen(navController: NavHostController) {
 
 @Composable
 fun BottomNavBar(navController: NavHostController) {
-    val items = listOf("main_screen", "movies", "series")
-    val icons = listOf(Icons.Default.Home, Icons.Default.Movie, Icons.Default.Tv)
+    val items = listOf("main_screen", "movies", "series", "profile_screen")
+    val icons = listOf(Icons.Default.Home, Icons.Default.Movie, Icons.Default.Tv,Icons.Default.AccountCircle)
     var selectedItem by remember { mutableIntStateOf(0) }
 
     NavigationBar {

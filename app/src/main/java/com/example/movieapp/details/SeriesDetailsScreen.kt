@@ -9,15 +9,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -58,9 +57,7 @@ fun SeriesDetailsScreen(seriesId: Int, seriesViewModel: SeriesViewModel) {
         series != null -> {
             val seriesDetails = series!!
             Scaffold(
-                topBar = {
-
-                }
+                topBar = {}
             ) { paddingValues ->
                 Column(
                     modifier = Modifier
@@ -75,7 +72,7 @@ fun SeriesDetailsScreen(seriesId: Int, seriesViewModel: SeriesViewModel) {
                             .height(500.dp),
                         contentScale = ContentScale.Crop
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                         Text(
                             text = seriesDetails.name,
@@ -84,36 +81,38 @@ fun SeriesDetailsScreen(seriesId: Int, seriesViewModel: SeriesViewModel) {
                         )
                         Text(
                             text = "Original Name: ${seriesDetails.original_name}",
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = Color.Gray
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
                         Text(
                             text = "Overview:",
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.titleLarge,
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
                         Text(
                             text = seriesDetails.overview,
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyLarge
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
                         Row {
                             Text(
                                 text = "First Air Date: ${seriesDetails.first_air_date}",
-                                style = MaterialTheme.typography.bodySmall,
+                                style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.weight(1f)
                             )
+                            Spacer(modifier = Modifier.height(32.dp))
+
                             Text(
                                 text = "Rating: ${seriesDetails.vote_average}",
-                                style = MaterialTheme.typography.bodySmall,
+                                style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.weight(1f)
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
                         Text(
                             text = "Votes: ${seriesDetails.vote_count}",
-                            style = MaterialTheme.typography.bodySmall
+                            style = MaterialTheme.typography.bodyLarge
                         )
                     }
                 }

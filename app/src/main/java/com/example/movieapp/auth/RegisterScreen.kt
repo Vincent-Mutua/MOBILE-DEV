@@ -16,10 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
-import com.example.movieapp.model.MockDataProvider
-import com.example.movieapp.model.MockUser
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

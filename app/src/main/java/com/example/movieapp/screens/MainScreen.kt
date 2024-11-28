@@ -1,7 +1,9 @@
 package com.example.movieapp.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -16,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.example.movieapp.sections_items.MovieSection
 import com.example.movieapp.sections_items.SeriesSection
 import com.example.movieapp.view_model.MovieViewModel
@@ -25,7 +26,6 @@ import coil.request.ImageRequest
 import com.example.movieapp.model.getPosterUrl
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     navController: NavController,
@@ -35,6 +35,10 @@ fun MainScreen(
     var searchQuery by remember { mutableStateOf("") }
     val trendingMovies by movieViewModel.trendingMovies.collectAsState()
     val trendingSeries by seriesViewModel.trendingSeries.collectAsState()
+    val  popular by seriesViewModel.popular.collectAsState()
+    val popularMovies by movieViewModel.popularMovies.collectAsState()
+
+
     val searchMovies by movieViewModel.searchMovies.collectAsState()
     val searchSeries by seriesViewModel.searchSeries.collectAsState()
 
@@ -57,6 +61,10 @@ fun MainScreen(
                         .padding(16.dp)
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
+                        .border(
+                            BorderStroke(1.dp, MaterialTheme.colorScheme.primary ),
+                            shape = RoundedCornerShape(8.dp)
+                            )
                         .padding(8.dp)
                 ) {
                     TextField(
@@ -91,11 +99,28 @@ fun MainScreen(
                             viewModel= movieViewModel,
                             isHorizontal = true
                         )
+                        Spacer(modifier = Modifier.height(32.dp))
                         SeriesSection(
                             title = "Trending Series",
                             series = trendingSeries,
                             navController = navController,
                             viewModel= seriesViewModel,
+                            isHorizontal = true
+                        )
+                        Spacer(modifier = Modifier.height(32.dp))
+                        SeriesSection(
+                            title = "Popular Series",
+                            series = popular,
+                            navController = navController,
+                            viewModel= seriesViewModel,
+                            isHorizontal = true
+                        )
+                        Spacer(modifier = Modifier.height(32.dp))
+                        MovieSection(
+                            title = "Popular Movies",
+                            movies = popularMovies,
+                            navController = navController,
+                            viewModel= movieViewModel,
                             isHorizontal = true
                         )
                     } else {

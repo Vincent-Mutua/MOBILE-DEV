@@ -15,3 +15,13 @@ val Blue200 = Color(0xFF90CAF9)
 val Blue500 = Color(0xFF2196F3)
 val Blue700 = Color(0xFF1976D2)
 val Teal200 = Color(0xFF03DAC5)
+
+
+
+val MovieBasePrimaryColor = Color(0xFF0F1B2B) // Dark blue
+val MovieBaseSecondaryColor = Color(0xFF1C4068) // Teal
+val MovieBaseAccentColor = Color(0xFFF5C518) // Yellow
+val MovieBaseSurfaceColor = Color(0xFF121212) // Very dark grey
+val MovieBaseBackgroundColor = Color(0xFF0D0D0D) // Dark grey
+val MovieBaseErrorColor = Color(0xFFCF6679) // Red
+

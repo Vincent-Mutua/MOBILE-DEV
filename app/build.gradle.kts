@@ -84,8 +84,10 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.auth)
     implementation(libs.google.firebase.firestore)
+    implementation (libs.firebase.storage.ktx)
     implementation (libs.coil.compose)
     implementation (libs.androidx.material.icons.extended)
+    implementation (libs.androidx.activity.compose.v170)
 
 
 }

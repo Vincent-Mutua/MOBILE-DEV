@@ -32,6 +32,8 @@ import com.example.movieapp.view_model.MovieViewModel
 fun MovieDetailsScreen(movieId: Int, movieViewModel: MovieViewModel) {
     var movie by remember { mutableStateOf<Movie?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    var showContextMenu by remember { mutableStateOf(false) }
+
 
     LaunchedEffect(movieId) {
         val result = movieViewModel.fetchMovieDetails(movieId)
@@ -57,6 +59,7 @@ fun MovieDetailsScreen(movieId: Int, movieViewModel: MovieViewModel) {
                     modifier = Modifier
                         .padding(paddingValues)
                         .verticalScroll(rememberScrollState())
+
                 ) {
                     Image(
                         painter = rememberAsyncImagePainter(movieDetails.getPosterUrl()),
@@ -66,7 +69,7 @@ fun MovieDetailsScreen(movieId: Int, movieViewModel: MovieViewModel) {
                             .height(500.dp),
                         contentScale = ContentScale.Crop
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                         Text(
                             text = movieDetails.title,
@@ -75,36 +78,37 @@ fun MovieDetailsScreen(movieId: Int, movieViewModel: MovieViewModel) {
                         )
                         Text(
                             text = "Original Title: ${movieDetails.original_title}",
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             color = Color.Gray
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
                         Text(
                             text = "Overview:",
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.titleLarge,
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
                         Text(
                             text = movieDetails.overview,
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyLarge
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
                         Row {
                             Text(
                                 text = "Release Date: ${movieDetails.release_date}",
-                                style = MaterialTheme.typography.bodySmall,
+                                style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.weight(1f)
                             )
+                            Spacer(modifier = Modifier.height(32.dp).width(8.dp))
                             Text(
                                 text = "Rating: ${movieDetails.vote_average}",
-                                style = MaterialTheme.typography.bodySmall,
+                                style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.weight(1f)
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
                         Text(
                             text = "Votes: ${movieDetails.vote_count}",
-                            style = MaterialTheme.typography.bodySmall
+                            style = MaterialTheme.typography.bodyLarge
                         )
                     }
                 }
